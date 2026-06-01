@@ -28,16 +28,21 @@
       inset: 0;
       z-index: 1;
       pointer-events: none;
-      background: url('avatar.png') center center / 80vmin no-repeat;
+      background: url('avatar.png') center center / 100vmin no-repeat;
       opacity: 0.35;
       filter: blur(1px) saturate(1.6);
-      animation: galaxyDrift 60s ease-in-out infinite alternate;
+      animation: galaxyRotate 180s linear infinite, galaxyPulse 20s ease-in-out infinite alternate;
     }
 
-    @keyframes galaxyDrift {
-      0%   { transform: scale(1)    rotate(0deg); opacity: 0.28; }
-      50%  { transform: scale(1.08) rotate(4deg); opacity: 0.42; }
-      100% { transform: scale(1.03) rotate(-3deg); opacity: 0.32; }
+    @keyframes galaxyRotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    @keyframes galaxyPulse {
+      0%   { opacity: 0.28; }
+      50%  { opacity: 0.42; }
+      100% { opacity: 0.32; }
     }
 
     .nebula {
@@ -70,12 +75,14 @@
       gap: 1.6rem;
       text-align: center;
       padding: 2rem;
+      margin-top: 4.5vh;
     }
 
     h1 {
-      font-size: clamp(2.4rem, 7vw, 5rem);
+      font-size: clamp(1.4rem, 7.5vw, 5rem);
       font-weight: 300;
       letter-spacing: 0.18em;
+      white-space: nowrap;
       text-transform: uppercase;
       color: #fff;
       text-shadow:
@@ -128,10 +135,42 @@
       flex-shrink: 0;
     }
 
+    @media (max-width: 500px) {
+      h1 { letter-spacing: 0.08em; }
+      .github-link { font-size: 0.65rem; padding: 0.55rem 1.1rem; }
+      .github-link svg { width: 14px; height: 14px; }
+    }
+
     .divider {
       width: 60px;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(160,120,255,0.5), transparent);
+    }
+
+    .sponsor-link {
+      position: fixed;
+      bottom: 1.6rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: rgba(255, 150, 180, 0.5);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    .sponsor-link:hover {
+      color: rgba(255, 150, 180, 0.9);
+    }
+
+    .sponsor-link svg {
+      width: 14px; height: 14px;
+      fill: currentColor;
     }
   </style>
 </head>
@@ -161,6 +200,13 @@
     github.com/cosmicsilence
   </a>
 </div>
+
+<a class="sponsor-link" href="https://github.com/sponsors/cosmicsilence" target="_blank" rel="noopener">
+  <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7.655 14.916 3 10.30a4.113 4.113 0 0 1 0-5.817 4.112 4.112 0 0 1 5.817 0l.183.184.184-.184a4.112 4.112 0 0 1 5.817 5.817l-4.655 4.616a.75.75 0 0 1-1.09 0Z"/>
+  </svg>
+  Sponsor
+</a>
 
 <script>
 (function () {
