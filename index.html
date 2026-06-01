@@ -20,10 +20,27 @@
       z-index: 0;
     }
 
-    .nebula {
+    .galaxy-bg {
       position: fixed;
       inset: 0;
       z-index: 1;
+      pointer-events: none;
+      background: url('avatar.png') center center / 80vmin no-repeat;
+      opacity: 0.35;
+      filter: blur(1px) saturate(1.6);
+      animation: galaxyDrift 60s ease-in-out infinite alternate;
+    }
+
+    @keyframes galaxyDrift {
+      0%   { transform: scale(1)    rotate(0deg); opacity: 0.28; }
+      50%  { transform: scale(1.08) rotate(4deg); opacity: 0.42; }
+      100% { transform: scale(1.03) rotate(-3deg); opacity: 0.32; }
+    }
+
+    .nebula {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
       pointer-events: none;
       background:
         radial-gradient(ellipse 70% 45% at 15% 25%, rgba(80, 0, 120, 0.35) 0%, transparent 70%),
@@ -41,7 +58,7 @@
 
     .content {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -50,20 +67,6 @@
       gap: 1.6rem;
       text-align: center;
       padding: 2rem;
-    }
-
-    .logo {
-      width: 88px;
-      height: 88px;
-      border-radius: 50%;
-      border: 2px solid rgba(160, 120, 255, 0.5);
-      box-shadow: 0 0 24px rgba(130, 80, 255, 0.6), 0 0 60px rgba(130, 80, 255, 0.2);
-      animation: logoPulse 4s ease-in-out infinite;
-    }
-
-    @keyframes logoPulse {
-      0%, 100% { box-shadow: 0 0 24px rgba(130, 80, 255, 0.6), 0 0 60px rgba(130, 80, 255, 0.2); }
-      50%       { box-shadow: 0 0 36px rgba(160, 100, 255, 0.9), 0 0 90px rgba(130, 80, 255, 0.35); }
     }
 
     h1 {
@@ -132,16 +135,12 @@
 <body>
 
 <canvas id="space"></canvas>
+<div class="galaxy-bg"></div>
 <div class="nebula"></div>
 
 <div class="content">
-  <img class="logo"
-       src="avatar.png"
-       alt="Cosmic Silence" />
-
-  <div class="divider"></div>
   <h1>Cosmic Silence</h1>
-  <p class="tagline">Open source from across the universe</p>
+  <p class="tagline">Building in the void</p>
   <div class="divider"></div>
 
   <a class="github-link" href="https://github.com/cosmicsilence" target="_blank" rel="noopener">
