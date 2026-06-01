@@ -31,7 +31,8 @@
       background: url('avatar.png') center center / 100vmin no-repeat;
       opacity: 0.35;
       filter: blur(1px) saturate(1.6);
-      animation: galaxyRotate 180s linear infinite, galaxyPulse 20s ease-in-out infinite alternate;
+      will-change: transform;
+      animation: galaxyPulse 20s ease-in-out infinite alternate;
     }
 
     @keyframes galaxyRotate {
@@ -59,9 +60,9 @@
     }
 
     @keyframes nebulaShift {
-      0%   { opacity: 0.8; filter: hue-rotate(0deg); }
-      50%  { opacity: 1.0; filter: hue-rotate(20deg); }
-      100% { opacity: 0.7; filter: hue-rotate(-15deg); }
+      0%   { opacity: 0.8; }
+      50%  { opacity: 1.0; }
+      100% { opacity: 0.7; }
     }
 
     .content {
@@ -216,6 +217,7 @@
 
   let lastShoot = 0;
   let nextShootDelay = rand(1500, 4000);
+  let rafId = null;
 
   function draw(ts) {
     ctx.clearRect(0, 0, W, H);
@@ -259,12 +261,24 @@
       }
     }
 
-    requestAnimationFrame(draw);
+    rafId = requestAnimationFrame(draw);
   }
+
+  function startLoop() {
+    if (!rafId) rafId = requestAnimationFrame(draw);
+  }
+
+  function stopLoop() {
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    document.hidden ? stopLoop() : startLoop();
+  });
 
   window.addEventListener('resize', resize);
   resize();
-  requestAnimationFrame(draw);
+  startLoop();
 })();
 </script>
 </body>
